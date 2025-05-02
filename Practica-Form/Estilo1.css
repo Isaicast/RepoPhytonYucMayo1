@@ -1,0 +1,94 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center; /* Centrado horizontal <-->*/
+    align-items: flex-start;     /* Centrado vertical */
+    background-color: #f0f0f0; 
+  }
+
+  form { 
+    display: flex; /*Activar propiedades de Flexform */
+    flex-direction: column; /* (para conservar la columna) Los elementos dentro del formulario están en columna */
+      }
+
+  .container {
+    width: 100%;
+    max-width: 400px; /* Limitar el tamaño del formulario */
+    padding: 20px;
+    background-color: white; /* Fondo blanco para el formulario */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-top: 10PX;
+    
+  }
+    
+
+.form-group {
+    display: flex;
+    flex-direction: column;  /* Lo contenido en form-group se dsitribuye en columna*/
+    margin-bottom: 15px;  /* Espaciado entre los grupos en los DIV */
+}
+  
+.form-group label {
+    margin-top: 5px;    /* Espaciado superior del label */
+    margin-bottom: 3px;  /* Espaciado entre label y el input */
+}
+
+input { /* Color en los input de datos personales*/
+    background-color: #f0f0f0;
+}
+/* Estilo para la etiqueta del género */
+.form-group1 label[for="gen"] {
+    display: block;  /* la etiqueta género ocupa toda la linea */
+    margin-bottom: 5px;  /* espacio entre la etiqueta y los radios */
+}
+
+.form-group1 label {   
+    margin-right: 10px; /* Agrega espacio entre radio butons */
+    
+}
+
+/* Estilos para la etiqueta del campo de comentarios */
+
+
+.comments-group label {
+  /*display: block;*/ 
+  margin-bottom: 5px;
+  } 
+ 
+  
+
+textarea{
+    background-color: #f0f0f0;
+}
+
+.radio-group label {
+   
+    margin-right: 15px; /* Agrega espacio entre radio butons */
+}
+
+
+button {
+    padding: 5px;
+    background-color: #61F75C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 0px;
+    margin-top: 5px;
+  }
+  
+  button:hover {
+    background-color: #07FA00;
+  } 
+   
+ 
+  legend {
+    font-size: 1.0em;
+    font-weight: bold;
+    color: #848683;    
+  }
+
+
