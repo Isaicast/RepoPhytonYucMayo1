@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 
 public class Venta {
-    private int idVenta;
+    private int idVenta; // Ejemplo de encapsulamiento
     private int idCliente;
     private int idVendedor;
     
 
-    private ArrayList<Producto> productos;
-    private ArrayList<Integer> cantidades;
+    private ArrayList<Producto> productos; //Aqui hay una Relación con la Clase Productos (Agregación)
+    private ArrayList<Integer> cantidades; 
     private double total;
-
+    
     public Venta(int idVenta, int idCliente, int idVendedor) {
         this.idVenta = idVenta;
         this.idCliente = idCliente;
@@ -18,8 +18,8 @@ public class Venta {
         this.cantidades = new ArrayList<>();
         this.total = 0.0;
     }
-
-    public void agregarProducto(Producto p, int cantidad) {
+    //Agregación, Producto sigue exisitendo si se elimna la clase Venta
+    public void agregarProducto(Producto p, int cantidad) { 
         productos.add(p);
         cantidades.add(cantidad);
         total += p.obtenerPrecio() * cantidad;
