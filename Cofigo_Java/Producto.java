@@ -10,6 +10,14 @@ public class Producto {
 
     // Constructor
     public Producto(int idProducto, double precio, String categoria, String marca, int stock, String nombre) {
+        if (idProducto <= 0) {
+            throw new IllegalArgumentException("El ID debe ser mayor que cero.");
+        }
+        if (!validarTexto(nombre)) {
+            throw new IllegalArgumentException("El nombre es inválido. Solo se permiten letras, números y espacios.");
+        }
+        
+
         this.idProducto = idProducto;
         this.precio = precio;
         this.categoria = categoria;
@@ -18,6 +26,8 @@ public class Producto {
         this.nombre=nombre;
         this.activo=true;
     }
+
+
 
     // Métodos getters y setters
     public String getNombre() {
@@ -112,7 +122,11 @@ public class Producto {
     this.activo = true;
     System.out.println("Producto activado.");
     }
-
-
+    
+    // Método privado para validar textos (nombre, marca, categoría)
+    private boolean validarTexto(String texto) {
+        return texto != null && !texto.trim().isEmpty() && texto.matches("[a-zA-Z0-9 ]+");
+    }
+    
  
 }

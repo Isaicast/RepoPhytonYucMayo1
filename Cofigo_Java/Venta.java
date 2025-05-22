@@ -18,7 +18,7 @@ public class Venta {
         this.cantidades = new ArrayList<>();
         this.total = 0.0;
     }
-    //Agregación, Producto sigue exisitendo si se elimna la clase Venta, solo se agrega a venta pero no se genera en esta clase
+    //Agregación, Producto sigue exisitendo si se elimina la clase Venta, solo se agrega a venta pero no se genera en esta clase
     public void agregarProducto(Producto p, int cantidad) { 
         productos.add(p);
         cantidades.add(cantidad);

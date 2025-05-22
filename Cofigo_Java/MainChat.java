@@ -50,8 +50,18 @@ public class MainChat{
 
                 case 3:
                     System.out.println("Ingrese los datos del nuevo producto:");
-                    System.out.print("ID: ");
-                    int id = scanner.nextInt();
+                    int id = -1;
+                    while (id <= 0) {
+                        System.out.print("ID: ");
+                        try {
+                            id = Integer.parseInt(scanner.nextLine());
+                            if (id <= 0) {
+                                System.out.println("El ID debe ser mayor que cero.");
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Entrada inválida. Debes ingresar un número entero.");
+                        }
+                    }
                     System.out.print("Precio: ");
                     double precio = scanner.nextDouble();
                     scanner.nextLine(); // limpiar buffer
