@@ -107,5 +107,12 @@ public class Producto {
         System.out.println("Producto desactivado.");
     }
 
+    // Método para activar el producto
+    public void activarProducto() {
+    this.activo = true;
+    System.out.println("Producto activado.");
+    }
+
+
  
 }
