@@ -14,8 +14,15 @@ public class Cliente {
     //Modificar perfil cliente
     public void actualizarPerfil(String nuevoTelefono, String nuevaDireccion, String nuevousaurio, String nuevaContrasena) {
         this.telefono = nuevoTelefono;
-        this.direccion = nuevaDireccion;
+        if(nuevaDireccion !=null && !nuevaDireccion.trim().isEmpty()) {
+            this.direccion = nuevaDireccion;
+        }
+        
+        if (nuevousaurio != null && !nuevousaurio.trim().isEmpty()) {
+        this.usuario = nuevousaurio;
         this.usuario=nuevousaurio;
+        }
+                
         this.contrasena=nuevaContrasena;
     }
 

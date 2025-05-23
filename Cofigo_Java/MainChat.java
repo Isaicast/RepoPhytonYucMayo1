@@ -212,8 +212,11 @@ public class MainChat{
                     scanner.nextLine();
                     Cliente cEditar = buscarClientePorId(clientes, idEditarCliente);
                     if (cEditar != null) {
-                        System.out.print("Nuevo teléfono: ");
+                        System.out.print("Nuevo teléfono (" + cEditar.getTelefono() + "): ");
                         String nuevoTel = scanner.nextLine();
+                        if (!nuevoTel.isEmpty()){
+                            nuevoTel = cEditar.getTelefono();
+                        }
                         System.out.print("Nueva dirección: ");
                         String nuevaDir = scanner.nextLine();
                         System.out.print("Nuevo usuario: ");
