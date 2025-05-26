@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+
 public class Cliente {
 
     //atributos del cliente
     private int idCliente;
     private String nombre, apellidoP, apellidoM, email, telefono, direccion,usuario, contrasena;
+    private final ArrayList<Venta> ventas; //Relacion de agregacion con Ventas
 
  
 
@@ -13,17 +16,11 @@ public class Cliente {
 
     //Modificar perfil cliente
     public void actualizarPerfil(String nuevoTelefono, String nuevaDireccion, String nuevousaurio, String nuevaContrasena) {
-        this.telefono = nuevoTelefono;
-        if(nuevaDireccion !=null && !nuevaDireccion.trim().isEmpty()) {
-            this.direccion = nuevaDireccion;
-        }
-        
-        if (nuevousaurio != null && !nuevousaurio.trim().isEmpty()) {
-        this.usuario = nuevousaurio;
-        this.usuario=nuevousaurio;
-        }
-                
+        this.telefono = nuevoTelefono;        
+        this.direccion = nuevaDireccion;
+        this.usuario = nuevousaurio;                    
         this.contrasena=nuevaContrasena;
+        
     }
 
 
@@ -46,6 +43,7 @@ public class Cliente {
         this.nombre = nombre;
         this.telefono = telefono;
         this.usuario = usuario;
+        this.ventas = new ArrayList<>(); //Atributo para relacionar el cliente con las ventas realizadas
     }
     
     
@@ -104,6 +102,15 @@ public class Cliente {
     }
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    //Metodos para agregar clientes a ventas
+    public void agregarVenta(Venta venta) {
+    ventas.add(venta);
+    }
+
+    public ArrayList<Venta> getVentas() {
+    return ventas;
     }
 
     

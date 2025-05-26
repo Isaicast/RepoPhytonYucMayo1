@@ -6,6 +6,8 @@ public class MainChat{
         Scanner scanner = new Scanner(System.in);
         ArrayList<Producto> productos = new ArrayList<>();
         ArrayList<Cliente> clientes = new ArrayList<>();
+        ArrayList<Venta> ventas = new ArrayList<>();
+        
 
         
 
@@ -26,6 +28,9 @@ public class MainChat{
             System.out.println("10. Mostrar detalles de cliente");
             System.out.println("11. Editar perfil de cliente");
             System.out.println("12. Dar de baja cuenta de cliente");
+            System.out.println("\n--- MENÚ DE VENTAS ---");
+            System.out.println("13. Realizar una venta");
+            System.out.println("14. Ver historial de todas las ventas");
             System.out.println("0. Salir");
             System.out.print("Selecciona una opción: ");
             opcion = scanner.nextInt();
@@ -214,11 +219,14 @@ public class MainChat{
                     if (cEditar != null) {
                         System.out.print("Nuevo teléfono (" + cEditar.getTelefono() + "): ");
                         String nuevoTel = scanner.nextLine();
-                        if (!nuevoTel.isEmpty()){
+                        if (nuevoTel.isEmpty()){
                             nuevoTel = cEditar.getTelefono();
                         }
-                        System.out.print("Nueva dirección: ");
+                        System.out.print("Nuevo dirección (" + cEditar.getDireccion() + "): ");
                         String nuevaDir = scanner.nextLine();
+                        if (nuevaDir.isEmpty()){
+                            nuevaDir = cEditar.getDireccion();
+                        } 
                         System.out.print("Nuevo usuario: ");
                         String nuevoUser = scanner.nextLine();
                         System.out.print("Nueva contraseña: ");
@@ -243,8 +251,70 @@ public class MainChat{
                         System.out.println("Cliente no encontrado.");
                     }
                     break;
+
+                case 13: // Realizar una venta
+                    System.out.print("Ingrese el ID del cliente que realiza la compra: ");
+                    int idClienteVenta = scanner.nextInt();
+                    Cliente clienteVenta = buscarClientePorId(clientes, idClienteVenta);
+
+                    if (clienteVenta == null) {
+                        System.out.println("Cliente no encontrado.");
+                    break;
+                    }
+
+                    System.out.print("Ingrese el ID del vendedor: ");
+                    int idVendedor = scanner.nextInt();
     
-                    
+                    int idVenta = ventas.size() + 1; // Puedes generar el ID de venta automáticamente
+                    Venta nuevaVenta = new Venta(idVenta, clienteVenta, idVendedor);
+
+                    boolean agregarMasProductos;
+                    do {
+                    System.out.print("Ingrese el ID del producto a agregar: ");
+                    int idProdVenta = scanner.nextInt();
+                    Producto productoVenta = buscarProductoPorId(productos, idProdVenta);
+
+                    if (productoVenta == null) {
+                    System.out.println("Producto no encontrado.");
+                    break;
+                    }
+
+                    System.out.print("Ingrese la cantidad: ");
+                    int cantidadVenta = scanner.nextInt();
+
+                    if (cantidadVenta <= 0 || cantidadVenta > productoVenta.getStock()) {
+                    System.out.println("Cantidad inválida o insuficiente en stock.");
+                    } else {
+                        nuevaVenta.agregarProducto(productoVenta, cantidadVenta);
+                        productoVenta.actualizarStock(-cantidadVenta); // Disminuir stock
+                        System.out.println("Producto agregado a la venta.");
+                    }           
+
+                    System.out.print("¿Desea agregar otro producto? (true/false): ");
+                    agregarMasProductos = scanner.nextBoolean();
+
+                } while (agregarMasProductos);
+
+                ventas.add(nuevaVenta);
+                clienteVenta.agregarVenta(nuevaVenta); //Relaciona la venta con el cliente (agrega la venta al historial del cliente) 
+
+                
+
+                System.out.println("\n--- Detalles de la venta ---");
+                nuevaVenta.consultarHistorial();
+                break;
+                
+                case 14: // Mostrar historial de ventas
+                    if (ventas.isEmpty()) {
+                        System.out.println("No hay ventas registradas.");
+                    } else {
+                        System.out.println("\n--- HISTORIAL DE VENTAS ---");
+                        for (Venta venta : ventas) {
+                            venta.consultarHistorial();
+                            System.out.println(); // Espacio entre ventas
+                        }
+                    }
+                    break;
     
 
                 case 0:

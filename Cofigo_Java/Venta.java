@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Venta {
     private int idVenta; // (Private) uso de Encapsulaiento
-    private int idCliente; // Dependencia indereca a Cliente a través del ID
+    private Cliente cliente;
     private int idVendedor;
     
 
@@ -10,9 +10,9 @@ public class Venta {
     private ArrayList<Integer> cantidades; 
     private double total;
     
-    public Venta(int idVenta, int idCliente, int idVendedor) {
+    public Venta(int idVenta, Cliente cliente, int idVendedor) {
         this.idVenta = idVenta;
-        this.idCliente = idCliente;
+        this.cliente = cliente;
         this.idVendedor = idVendedor;
         this.productos = new ArrayList<>();
         this.cantidades = new ArrayList<>();
@@ -38,7 +38,7 @@ public class Venta {
     }
 
     public void mostrarDetalles() {
-        System.out.println("Venta ID: " + idVenta + " | Cliente ID: " + idCliente + " | Vendedor ID: " + idVendedor);
+        System.out.println("Venta ID: " + idVenta + " | Cliente ID: " + cliente.getIdCliente()+ " | Vendedor ID: " + idVendedor);
         for (int i = 0; i < productos.size(); i++) {
             System.out.println("- " + productos.get(i).getMarca() + " x" + cantidades.get(i));
         }
@@ -46,7 +46,30 @@ public class Venta {
     }
 
     public void consultarHistorial() {
-        System.out.println("Consulta de historial no implementada (simulación).");
+        //System.out.println("Consulta de historial no implementada (simulación).");        
+        System.out.println("Historial de la venta ID: " + idVenta);
+        System.out.println("Cliente: " + cliente.getNombre() + " (ID: " + cliente.getIdCliente() + ")");
+        System.out.println("------------------------------------------------------");
+        System.out.printf("%-10s %-25s %-10s %-10s %-10s\n", "ID Producto", "Producto", "Precio", "Cantidad", "Subtotal");
+
+        for (int i = 0; i < productos.size(); i++) {
+            Producto p = productos.get(i);
+            int cantidad = cantidades.get(i);
+            double precio = p.obtenerPrecio();
+            double subtotal = precio * cantidad;
+
+            String nombreProducto = p.getNombre();
+            if (nombreProducto.length() > 25) {
+                nombreProducto = nombreProducto.substring(0, 25) + "...";
+            }
+
+            System.out.printf("%-10d %-25s $%-9.2f %-10d $%-9.2f\n",
+                    p.getIdProducto(), nombreProducto, precio, cantidad, subtotal);
+        }
+
+        System.out.println("------------------------------------------------------");
+        System.out.printf("TOTAL: $%.2f\n", total);
+            
     }
 
     // Getters y setters
@@ -58,14 +81,17 @@ public class Venta {
         this.idVenta = idVenta;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public int obtenerIdCliente() { //solo el ID de Cliente
+        return cliente.getIdCliente();
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+     public Cliente getCliente() {
+        return cliente;
     }
-
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    
     public int getIdVendedor() {
         return idVendedor;
     }
@@ -94,7 +120,6 @@ public class Venta {
         return total;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
-    }
+    
+   
 }
