@@ -115,7 +115,7 @@ public class MainChat{
                     }
                     break;
 
-                case 7:
+                case 7: //Editar datos de un Producto
                     System.out.print("Ingrese el ID del producto que desea editar: ");
                     int idEditar = scanner.nextInt();
                     scanner.nextLine(); // limpiar buffer
@@ -222,15 +222,24 @@ public class MainChat{
                         if (nuevoTel.isEmpty()){
                             nuevoTel = cEditar.getTelefono();
                         }
+
                         System.out.print("Nuevo dirección (" + cEditar.getDireccion() + "): ");
                         String nuevaDir = scanner.nextLine();
                         if (nuevaDir.isEmpty()){
                             nuevaDir = cEditar.getDireccion();
-                        } 
-                        System.out.print("Nuevo usuario: ");
+                        }
+                        
+                        System.out.print("Nuevo usuario (" + cEditar.getUsuario() + "): "); 
                         String nuevoUser = scanner.nextLine();
-                        System.out.print("Nueva contraseña: ");
+                        if (nuevoUser.isEmpty()){
+                            nuevoUser = cEditar.getUsuario();
+                        }
+
+                        System.out.print("Nueva contraseña (" + cEditar.getContrasena() + "): ");
                         String nuevaPass = scanner.nextLine();
+                        if(nuevaPass.isEmpty()){
+                            nuevaPass = cEditar.getContrasena();                            
+                        }
 
                         cEditar.actualizarPerfil(nuevoTel, nuevaDir, nuevoUser, nuevaPass);
                         System.out.println("Perfil actualizado.");

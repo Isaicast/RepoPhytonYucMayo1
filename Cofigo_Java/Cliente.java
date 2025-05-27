@@ -5,7 +5,7 @@ public class Cliente {
     //atributos del cliente
     private int idCliente;
     private String nombre, apellidoP, apellidoM, email, telefono, direccion,usuario, contrasena;
-    private final ArrayList<Venta> ventas; //Relacion de agregacion con Ventas
+    private final ArrayList<Venta> ventas; //Relacion de agregacion con Ventas 1:N
 
  
 
@@ -15,10 +15,10 @@ public class Cliente {
     }
 
     //Modificar perfil cliente
-    public void actualizarPerfil(String nuevoTelefono, String nuevaDireccion, String nuevousaurio, String nuevaContrasena) {
+    public void actualizarPerfil(String nuevoTelefono, String nuevaDireccion, String nuevoUsuario, String nuevaContrasena) {
         this.telefono = nuevoTelefono;        
         this.direccion = nuevaDireccion;
-        this.usuario = nuevousaurio;                    
+        this.usuario = nuevoUsuario;                    
         this.contrasena=nuevaContrasena;
         
     }
@@ -104,7 +104,7 @@ public class Cliente {
         this.contrasena = contrasena;
     }
 
-    //Metodos para agregar clientes a ventas
+    //Metodos para agregar clientes a ventas Metodo relacion activa de 1 a muchos con venta
     public void agregarVenta(Venta venta) {
     ventas.add(venta);
     }
