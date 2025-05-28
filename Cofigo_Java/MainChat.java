@@ -61,27 +61,21 @@ public class MainChat{
                     }
                     break;
 
-                case 3:
-                    System.out.println("Ingrese los datos del nuevo producto:");
-                    System.out.print("ID: ");
-                    int id = scanner.nextInt();
-                    System.out.print("Precio: ");
-                    double precio = scanner.nextDouble();
-                    scanner.nextLine(); // limpiar buffer
-                    System.out.print("Categoría: ");
-                    String categoria = scanner.nextLine();
-                    System.out.print("Marca: ");
-                    String marca = scanner.nextLine();
-                    System.out.print("Stock: ");
-                    int stock = scanner.nextInt();
-                    scanner.nextLine(); // limpiar buffer
-                    System.out.print("Nombre: ");
-                    String nombre = scanner.nextLine();
+                case 3: //Registrar un Nuevo Producto                   
+                    System.out.println("Ingrese los datos del nuevo producto:");    
+                    int id = leerEnteroPositivo(scanner, "ID: ");
+                    double precio = leerDecimalPositivo(scanner, "Precio: ");
+                    String categoria = leerTextoNoVacio(scanner, "Categoría: ");
+                    String marca = leerTextoNoVacio(scanner, "Marca: ");
+                    int stock = leerEnteroPositivo(scanner, "Stock: ");
+                    String nombre = leerTextoNoVacio(scanner, "Nombre: ");
 
                     Producto nuevoProducto = new Producto(id, precio, categoria, marca, stock, nombre);
                     productos.add(nuevoProducto);
                     nuevoProducto.registrarProducto();
                     break;
+
+
 
                 case 4:
                     System.out.print("Ingrese el ID del producto: ");
@@ -115,44 +109,60 @@ public class MainChat{
                     }
                     break;
 
-                case 7: //Editar datos de un Producto
+                case 7: //Editar datos de un Producto                    
                     System.out.print("Ingrese el ID del producto que desea editar: ");
-                    int idEditar = scanner.nextInt();
-                    scanner.nextLine(); // limpiar buffer
+                    int idEditar = leerEnteroPositivo(scanner, "");
                     Producto pEditar = buscarProductoPorId(productos, idEditar);
+    
                     if (pEditar != null) {
-                        System.out.println("Ingrese los nuevos datos (dejar en blanco para no cambiar):");
+                        System.out.println("Ingrese los nuevos datos (presione ENTER para omitir el cambio):");
 
                         System.out.print("Nuevo nombre (" + pEditar.getNombre() + "): ");
                         String nuevoNombre = scanner.nextLine();
-                        if (!nuevoNombre.isEmpty()) {
-                            pEditar.setNombre(nuevoNombre);
+                        if (!nuevoNombre.trim().isEmpty()) {
+                            pEditar.setNombre(nuevoNombre.trim());
                         }
 
                         System.out.print("Nueva categoría (" + pEditar.getCategoria() + "): ");
                         String nuevaCategoria = scanner.nextLine();
-                        if (!nuevaCategoria.isEmpty()) {
-                            pEditar.setCategoria(nuevaCategoria);
+                        if (!nuevaCategoria.trim().isEmpty()) {
+                            pEditar.setCategoria(nuevaCategoria.trim());
                         }
 
                         System.out.print("Nueva marca (" + pEditar.getMarca() + "): ");
                         String nuevaMarca = scanner.nextLine();
-                        if (!nuevaMarca.isEmpty()) {
-                            pEditar.setMarca(nuevaMarca);
+                        if (!nuevaMarca.trim().isEmpty()) {
+                        pEditar.setMarca(nuevaMarca.trim());
                         }
 
                         System.out.print("Nuevo precio (" + pEditar.getPrecio() + "): ");
                         String nuevoPrecioStr = scanner.nextLine();
-                        if (!nuevoPrecioStr.isEmpty()) {
-                            double nuevoPrecio = Double.parseDouble(nuevoPrecioStr);
-                            pEditar.setPrecio(nuevoPrecio);
+                        if (!nuevoPrecioStr.trim().isEmpty()) {
+                            try {
+                                double nuevoPrecio = Double.parseDouble(nuevoPrecioStr.trim());
+                                if (nuevoPrecio > 0) {
+                                    pEditar.setPrecio(nuevoPrecio);
+                                } else {
+                                    System.out.println("El precio debe ser mayor a 0. No se modificó.");
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Entrada inválida para precio. No se modificó.");
+                            }
                         }
 
                         System.out.print("Nuevo stock (" + pEditar.getStock() + "): ");
                         String nuevoStockStr = scanner.nextLine();
-                        if (!nuevoStockStr.isEmpty()) {
-                            int nuevoStock = Integer.parseInt(nuevoStockStr);
-                            pEditar.setStock(nuevoStock);
+                        if (!nuevoStockStr.trim().isEmpty()) {
+                            try {
+                                int nuevoStock = Integer.parseInt(nuevoStockStr.trim());
+                                if (nuevoStock >= 0) {
+                                    pEditar.setStock(nuevoStock);
+                                } else {
+                                    System.out.println("El stock no puede ser negativo. No se modificó.");
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Entrada inválida para stock. No se modificó.");
+                            }
                         }
 
                         System.out.println("Producto actualizado correctamente.");
@@ -174,25 +184,16 @@ public class MainChat{
 
                 case 9: // Registrar nuevo cliente
                     System.out.println("Ingrese los datos del nuevo cliente:");
-                    System.out.print("ID: ");
-                    int idCliente = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Nombre: ");
-                    String nombreC = scanner.nextLine();
-                    System.out.print("Apellido Paterno: ");
-                    String apellidoP = scanner.nextLine();
-                    System.out.print("Apellido Materno: ");
-                    String apellidoM = scanner.nextLine();
-                    System.out.print("Email: ");
-                    String email = scanner.nextLine();
-                    System.out.print("Teléfono: ");
-                    String telefono = scanner.nextLine();
-                    System.out.print("Dirección: ");
-                    String direccion = scanner.nextLine();
-                    System.out.print("Usuario: ");
-                    String usuario = scanner.nextLine();
-                    System.out.print("Contraseña: ");
-                    String contrasena = scanner.nextLine();
+
+                    int idCliente = leerEnteroPositivo(scanner, "ID: ");
+                    String nombreC = leerTextoNoVacio(scanner, "Nombre: ");
+                    String apellidoP = leerTextoNoVacio(scanner, "Apellido Paterno: ");
+                    String apellidoM = leerTextoNoVacio(scanner, "Apellido Materno: ");
+                    String email = leerTextoNoVacio(scanner, "Email: ");
+                    String telefono = leerTextoNoVacio(scanner, "Teléfono: ");
+                    String direccion = leerTextoNoVacio(scanner, "Dirección: ");
+                    String usuario = leerTextoNoVacio(scanner, "Usuario: ");
+                    String contrasena = leerTextoNoVacio(scanner, "Contraseña: ");
 
                     Cliente nuevoCliente = new Cliente(apellidoM, apellidoP, contrasena, direccion, email, idCliente, nombreC, telefono, usuario);
                     clientes.add(nuevoCliente);
@@ -213,40 +214,32 @@ public class MainChat{
 
                 case 11: // Editar perfil de cliente
                     System.out.print("Ingrese el ID del cliente: ");
-                    int idEditarCliente = scanner.nextInt();
-                    scanner.nextLine();
+                    int idEditarCliente = leerEnteroPositivo(scanner, "");
                     Cliente cEditar = buscarClientePorId(clientes, idEditarCliente);
+
                     if (cEditar != null) {
                         System.out.print("Nuevo teléfono (" + cEditar.getTelefono() + "): ");
                         String nuevoTel = scanner.nextLine();
-                        if (nuevoTel.isEmpty()){
-                            nuevoTel = cEditar.getTelefono();
-                        }
+                        if (nuevoTel.trim().isEmpty()) nuevoTel = cEditar.getTelefono();
 
-                        System.out.print("Nuevo dirección (" + cEditar.getDireccion() + "): ");
+                        System.out.print("Nueva dirección (" + cEditar.getDireccion() + "): ");
                         String nuevaDir = scanner.nextLine();
-                        if (nuevaDir.isEmpty()){
-                            nuevaDir = cEditar.getDireccion();
-                        }
-                        
-                        System.out.print("Nuevo usuario (" + cEditar.getUsuario() + "): "); 
+                        if (nuevaDir.trim().isEmpty()) nuevaDir = cEditar.getDireccion();
+
+                        System.out.print("Nuevo usuario (" + cEditar.getUsuario() + "): ");
                         String nuevoUser = scanner.nextLine();
-                        if (nuevoUser.isEmpty()){
-                            nuevoUser = cEditar.getUsuario();
-                        }
+                        if (nuevoUser.trim().isEmpty()) nuevoUser = cEditar.getUsuario();
 
                         System.out.print("Nueva contraseña (" + cEditar.getContrasena() + "): ");
                         String nuevaPass = scanner.nextLine();
-                        if(nuevaPass.isEmpty()){
-                            nuevaPass = cEditar.getContrasena();                            
-                        }
+                        if (nuevaPass.trim().isEmpty()) nuevaPass = cEditar.getContrasena();
 
-                        cEditar.actualizarPerfil(nuevoTel, nuevaDir, nuevoUser, nuevaPass);
+                        cEditar.actualizarPerfil(nuevoTel.trim(), nuevaDir.trim(), nuevoUser.trim(), nuevaPass.trim());
                         System.out.println("Perfil actualizado.");
-                    } else {
-                        System.out.println("Cliente no encontrado.");
-                    }
-                    break;
+                } else {
+                    System.out.println("Cliente no encontrado.");
+                }
+                break;
                 
                 case 12: // Dar de baja cliente
                     System.out.print("Ingrese el ID del cliente: ");
@@ -262,25 +255,22 @@ public class MainChat{
                     break;
 
                 case 13: // Realizar una venta
-                    System.out.print("Ingrese el ID del cliente que realiza la compra: ");
-                    int idClienteVenta = scanner.nextInt();
+                    int idClienteVenta = leerEnteroPositivo(scanner, "Ingrese el ID del cliente que realiza la compra: ");
                     Cliente clienteVenta = buscarClientePorId(clientes, idClienteVenta);
 
                     if (clienteVenta == null) {
                         System.out.println("Cliente no encontrado.");
-                    break;
+                        break;
                     }
 
-                    System.out.print("Ingrese el ID del vendedor: ");
-                    int idVendedor = scanner.nextInt();
-    
-                    int idVenta = ventas.size() + 1; // Puedes generar el ID de venta automáticamente
+                    int idVendedor = leerEnteroPositivo(scanner, "Ingrese el ID del vendedor: ");
+
+                    int idVenta = ventas.size() + 1; // Generar ID venta automáticamente
                     Venta nuevaVenta = new Venta(idVenta, clienteVenta, idVendedor);
 
                     boolean agregarMasProductos;
                     do {
-                    System.out.print("Ingrese el ID del producto a agregar: ");
-                    int idProdVenta = scanner.nextInt();
+                    int idProdVenta = leerEnteroPositivo(scanner, "Ingrese el ID del producto a agregar: ");
                     Producto productoVenta = buscarProductoPorId(productos, idProdVenta);
 
                     if (productoVenta == null) {
@@ -288,26 +278,26 @@ public class MainChat{
                     break;
                     }
 
-                    System.out.print("Ingrese la cantidad: ");
-                    int cantidadVenta = scanner.nextInt();
+                    int cantidadVenta;
+                    do {
+                        cantidadVenta = leerEnteroPositivo(scanner, "Ingrese la cantidad: ");
+                        if (cantidadVenta > productoVenta.getStock()) {
+                            System.out.println("Cantidad insuficiente en stock (" + productoVenta.getStock() + "). Intente de nuevo.");
+                        }
+                    } while (cantidadVenta > productoVenta.getStock());
 
-                    if (cantidadVenta <= 0 || cantidadVenta > productoVenta.getStock()) {
-                    System.out.println("Cantidad inválida o insuficiente en stock.");
-                    } else {
-                        nuevaVenta.agregarProducto(productoVenta, cantidadVenta);
-                        productoVenta.actualizarStock(-cantidadVenta); // Disminuir stock
-                        System.out.println("Producto agregado a la venta.");
-                    }           
+                    nuevaVenta.agregarProducto(productoVenta, cantidadVenta);
+                    productoVenta.actualizarStock(-cantidadVenta); // Disminuir stock
+                    System.out.println("Producto agregado a la venta.");
 
                     System.out.print("¿Desea agregar otro producto? (true/false): ");
                     agregarMasProductos = scanner.nextBoolean();
+                    scanner.nextLine(); // limpiar buffer
 
                 } while (agregarMasProductos);
 
                 ventas.add(nuevaVenta);
-                clienteVenta.agregarVenta(nuevaVenta); //Relaciona la venta con el cliente (agrega la venta al historial del cliente) 
-
-                
+                clienteVenta.agregarVenta(nuevaVenta); // Relaciona la venta con el cliente (agrega la venta al historial del cliente)
 
                 System.out.println("\n--- Detalles de la venta ---");
                 nuevaVenta.consultarHistorial();
@@ -357,4 +347,54 @@ public class MainChat{
         }
         return null;
     }
+
+    //Metodos para validaciones
+    
+
+    public static int leerEnteroPositivo(Scanner scanner, String mensaje) {
+    int numero = -1;
+    while (numero <= 0) {
+        System.out.print(mensaje);
+        try {
+            numero = Integer.parseInt(scanner.nextLine());
+            if (numero <= 0) {
+                System.out.println("El número debe ser mayor a 0.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Debe ingresar un número entero.");
+        }
+    }
+    return numero;
+    }
+
+    public static double leerDecimalPositivo(Scanner scanner, String mensaje) {
+    double numero = -1;
+    while (numero <= 0) {
+        System.out.print(mensaje);
+        try {
+            numero = Double.parseDouble(scanner.nextLine());
+            if (numero <= 0) {
+                System.out.println("El número debe ser mayor a 0.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Debe ingresar un número decimal.");
+        }
+    }
+    return numero;
+}
+
+public static String leerTextoNoVacio(Scanner scanner, String mensaje) {
+    String texto = "";
+    while (texto.trim().isEmpty()) {
+        System.out.print(mensaje);
+        texto = scanner.nextLine().trim();
+        if (texto.isEmpty()) {
+            System.out.println("Este campo no puede estar vacío.");
+        }
+    }
+    return texto;
+}
+
+
+
 }
