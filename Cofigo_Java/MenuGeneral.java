@@ -1,15 +1,12 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MainChat{
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ArrayList<Producto> productos = new ArrayList<>();
-        ArrayList<Cliente> clientes = new ArrayList<>();
-        ArrayList<Venta> ventas = new ArrayList<>();
-        
+public class MenuGeneral {
 
-        
+    public static void ejecutarMenuGeneral(Scanner scanner) {
+        ArrayList<Producto> productos = Data.productos;
+        ArrayList<Cliente> clientes = Data.clientes;
+        ArrayList<Venta> ventas = Data.ventas;
 
         int opcion;
 
@@ -32,9 +29,8 @@ public class MainChat{
             System.out.println("13. Realizar una venta");
             System.out.println("14. Ver historial de todas las ventas");
             System.out.println("0. Salir");
-            System.out.print("Selecciona una opción: ");
-            opcion = scanner.nextInt();
-            scanner.nextLine(); // Limpiar buffer
+            opcion = InputUtils.leerEnteroCeroYPositivo(scanner, "Seleccione una opción: ");
+
 
             switch (opcion) {
                 case 1:
@@ -63,12 +59,12 @@ public class MainChat{
 
                 case 3: //Registrar un Nuevo Producto                   
                     System.out.println("Ingrese los datos del nuevo producto:");    
-                    int id = leerEnteroPositivo(scanner, "ID: ");
-                    double precio = leerDecimalPositivo(scanner, "Precio: ");
-                    String categoria = leerTextoNoVacio(scanner, "Categoría: ");
-                    String marca = leerTextoNoVacio(scanner, "Marca: ");
-                    int stock = leerEnteroPositivo(scanner, "Stock: ");
-                    String nombre = leerTextoNoVacio(scanner, "Nombre: ");
+                    int id = InputUtils.leerEnteroPositivo(scanner, "ID: ");
+                    double precio = InputUtils.leerDecimalPositivo(scanner, "Precio: ");
+                    String categoria = InputUtils.leerTextoNoVacio(scanner, "Categoría: ");
+                    String marca = InputUtils.leerTextoNoVacio(scanner, "Marca: ");
+                    int stock = InputUtils.leerEnteroPositivo(scanner, "Stock: ");
+                    String nombre = InputUtils.leerTextoNoVacio(scanner, "Nombre: ");
 
                     Producto nuevoProducto = new Producto(id, precio, categoria, marca, stock, nombre);
                     productos.add(nuevoProducto);
@@ -77,7 +73,7 @@ public class MainChat{
 
 
 
-                case 4:
+                case 4://Obtener precio de producto
                     System.out.print("Ingrese el ID del producto: ");
                     int idPrecio = scanner.nextInt();
                     Producto pPrecio = buscarProductoPorId(productos, idPrecio);
@@ -88,7 +84,7 @@ public class MainChat{
                     }
                     break;
 
-                case 5:
+                case 5: //Desactivar Producto
                     System.out.print("Ingrese el ID del producto: ");
                     int idDesactivar = scanner.nextInt();
                     Producto pDesactivar = buscarProductoPorId(productos, idDesactivar);
@@ -99,7 +95,7 @@ public class MainChat{
                     }
                     break;
 
-                case 6:
+                case 6: //Mostrar todos los Productos registrados
                     if (productos.isEmpty()) {
                         System.out.println("No hay productos registrados.");
                     } else {
@@ -111,7 +107,7 @@ public class MainChat{
 
                 case 7: //Editar datos de un Producto                    
                     System.out.print("Ingrese el ID del producto que desea editar: ");
-                    int idEditar = leerEnteroPositivo(scanner, "");
+                    int idEditar = InputUtils.leerEnteroPositivo(scanner, "");
                     Producto pEditar = buscarProductoPorId(productos, idEditar);
     
                     if (pEditar != null) {
@@ -185,15 +181,15 @@ public class MainChat{
                 case 9: // Registrar nuevo cliente
                     System.out.println("Ingrese los datos del nuevo cliente:");
 
-                    int idCliente = leerEnteroPositivo(scanner, "ID: ");
-                    String nombreC = leerTextoNoVacio(scanner, "Nombre: ");
-                    String apellidoP = leerTextoNoVacio(scanner, "Apellido Paterno: ");
-                    String apellidoM = leerTextoNoVacio(scanner, "Apellido Materno: ");
-                    String email = leerTextoNoVacio(scanner, "Email: ");
-                    String telefono = leerTextoNoVacio(scanner, "Teléfono: ");
-                    String direccion = leerTextoNoVacio(scanner, "Dirección: ");
-                    String usuario = leerTextoNoVacio(scanner, "Usuario: ");
-                    String contrasena = leerTextoNoVacio(scanner, "Contraseña: ");
+                    int idCliente = InputUtils.leerEnteroPositivo(scanner, "ID: ");
+                    String nombreC = InputUtils.leerTextoNoVacio(scanner, "Nombre: ");
+                    String apellidoP = InputUtils.leerTextoNoVacio(scanner, "Apellido Paterno: ");
+                    String apellidoM = InputUtils.leerTextoNoVacio(scanner, "Apellido Materno: ");
+                    String email = InputUtils.leerTextoNoVacio(scanner, "Email: ");
+                    String telefono = InputUtils.leerTextoNoVacio(scanner, "Teléfono: ");
+                    String direccion = InputUtils.leerTextoNoVacio(scanner, "Dirección: ");
+                    String usuario = InputUtils.leerTextoNoVacio(scanner, "Usuario: ");
+                    String contrasena = InputUtils.leerTextoNoVacio(scanner, "Contraseña: ");
 
                     Cliente nuevoCliente = new Cliente(apellidoM, apellidoP, contrasena, direccion, email, idCliente, nombreC, telefono, usuario);
                     clientes.add(nuevoCliente);
@@ -213,25 +209,23 @@ public class MainChat{
                     break;
 
                 case 11: // Editar perfil de cliente
-                    System.out.print("Ingrese el ID del cliente: ");
-                    int idEditarCliente = leerEnteroPositivo(scanner, "");
+                    int idEditarCliente = InputUtils.leerEnteroPositivo(scanner, "Ingrese el ID del cliente: ");
                     Cliente cEditar = buscarClientePorId(clientes, idEditarCliente);
 
                     if (cEditar != null) {
-                        
                         System.out.print("Nuevo teléfono (" + cEditar.getTelefono() + ") [Enter para mantener]: ");
                         String nuevoTel = scanner.nextLine();
                         if (nuevoTel.trim().isEmpty()) nuevoTel = cEditar.getTelefono();
 
-                        System.out.print("Nueva dirección (" + cEditar.getDireccion() + "): ");
+                        System.out.print("Nueva dirección (" + cEditar.getDireccion() + ") [Enter para mantener]: ");
                         String nuevaDir = scanner.nextLine();
                         if (nuevaDir.trim().isEmpty()) nuevaDir = cEditar.getDireccion();
 
-                        System.out.print("Nuevo usuario (" + cEditar.getUsuario() + "): ");
+                        System.out.print("Nuevo usuario (" + cEditar.getUsuario() + ") [Enter para mantener]: ");
                         String nuevoUser = scanner.nextLine();
                         if (nuevoUser.trim().isEmpty()) nuevoUser = cEditar.getUsuario();
 
-                        System.out.print("Nueva contraseña (" + cEditar.getContrasena() + "): ");
+                        System.out.print("Nueva contraseña (" + cEditar.getContrasena() + ") [Enter para mantener]: ");
                         String nuevaPass = scanner.nextLine();
                         if (nuevaPass.trim().isEmpty()) nuevaPass = cEditar.getContrasena();
 
@@ -256,7 +250,7 @@ public class MainChat{
                     break;
 
                 case 13: // Realizar una venta
-                    int idClienteVenta = leerEnteroPositivo(scanner, "Ingrese el ID del cliente que realiza la compra: ");
+                    int idClienteVenta = InputUtils.leerEnteroPositivo(scanner, "Ingrese el ID del cliente que realiza la compra: ");
                     Cliente clienteVenta = buscarClientePorId(clientes, idClienteVenta);
 
                     if (clienteVenta == null) {
@@ -264,14 +258,14 @@ public class MainChat{
                         break;
                     }
 
-                    int idVendedor = leerEnteroPositivo(scanner, "Ingrese el ID del vendedor: ");
+                    int idVendedor = InputUtils.leerEnteroPositivo(scanner, "Ingrese el ID del vendedor: ");
 
                     int idVenta = ventas.size() + 1; // Generar ID venta automáticamente
                     Venta nuevaVenta = new Venta(idVenta, clienteVenta, idVendedor);
 
                     boolean agregarMasProductos;
                     do {
-                    int idProdVenta = leerEnteroPositivo(scanner, "Ingrese el ID del producto a agregar: ");
+                    int idProdVenta = InputUtils.leerEnteroPositivo(scanner, "Ingrese el ID del producto a agregar: ");
                     Producto productoVenta = buscarProductoPorId(productos, idProdVenta);
 
                     if (productoVenta == null) {
@@ -281,7 +275,7 @@ public class MainChat{
 
                     int cantidadVenta;
                     do {
-                        cantidadVenta = leerEnteroPositivo(scanner, "Ingrese la cantidad: ");
+                        cantidadVenta = InputUtils.leerEnteroPositivo(scanner, "Ingrese la cantidad: ");
                         if (cantidadVenta > productoVenta.getStock()) {
                             System.out.println("Cantidad insuficiente en stock (" + productoVenta.getStock() + "). Intente de nuevo.");
                         }
@@ -316,7 +310,6 @@ public class MainChat{
                     }
                     break;
     
-
                 case 0:
                     System.out.println("Saliendo del sistema...");
                     break;
@@ -324,13 +317,10 @@ public class MainChat{
                 default:
                     System.out.println("Opción inválida. Intenta de nuevo.");
             }
-
         } while (opcion != 0);
-
-        scanner.close();
     }
 
-    // Método para buscar un producto por su ID
+        // Método para buscar un producto por su ID
     public static Producto buscarProductoPorId(ArrayList<Producto> lista, int id) {
         for (Producto p : lista) {
             if (p.getIdProducto() == id) {
@@ -348,54 +338,5 @@ public class MainChat{
         }
         return null;
     }
-
-    //Metodos para validaciones
     
-
-    public static int leerEnteroPositivo(Scanner scanner, String mensaje) {
-    int numero = -1;
-    while (numero <= 0) {
-        System.out.print(mensaje);
-        try {
-            numero = Integer.parseInt(scanner.nextLine());
-            if (numero <= 0) {
-                System.out.println("El número debe ser mayor a 0.");
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Entrada inválida. Debe ingresar un número entero.");
-        }
-    }
-    return numero;
-    }
-
-    public static double leerDecimalPositivo(Scanner scanner, String mensaje) {
-    double numero = -1;
-    while (numero <= 0) {
-        System.out.print(mensaje);
-        try {
-            numero = Double.parseDouble(scanner.nextLine());
-            if (numero <= 0) {
-                System.out.println("El número debe ser mayor a 0.");
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Entrada inválida. Debe ingresar un número decimal.");
-        }
-    }
-    return numero;
-}
-
-public static String leerTextoNoVacio(Scanner scanner, String mensaje) {
-    String texto = "";
-    while (texto.trim().isEmpty()) {
-        System.out.print(mensaje);
-        texto = scanner.nextLine().trim();
-        if (texto.isEmpty()) {
-            System.out.println("Este campo no puede estar vacío.");
-        }
-    }
-    return texto;
-}
-
-
-
 }

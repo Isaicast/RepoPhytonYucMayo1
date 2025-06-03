@@ -4,6 +4,7 @@ public class Cliente extends Persona {
     private String usuario;
     private String contrasena;
     private final ArrayList<Venta> ventas; //Relacion de agregacion con Ventas 1:N
+    
 
     //Constructor de la clase
     public Cliente(String apellidoM, String apellidoP, String contrasena, String direccion, String email,
@@ -55,4 +56,12 @@ public class Cliente extends Persona {
     public ArrayList<Venta> getVentas() {
         return ventas;
     }
+
+    //METODOS PARA CONSULTAR LAS VENTAS DE UN CLINETE
+    public ArrayList<Venta> getHistorialVentas() {
+    return ventas;
+    }
+
+
+
 }
